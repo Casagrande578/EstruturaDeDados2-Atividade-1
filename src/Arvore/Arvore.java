@@ -19,13 +19,19 @@ public class Arvore {
     public Node getRoot() {
         return root;
     }
+    public boolean hasRoot(){
+        if(this.root != null){
+            return true;
+        }
+        return false;
+    }
 
     public void setRoot(Node root) {
         this.root = root;
     }
 
     public static boolean isValidExpression(String expression){
-        String regex = "^[0-9*\\/+\\-()]*$";
+        String regex = "^[0-9*\\/+\\-\\(\\)]*$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(expression);
 
@@ -42,7 +48,7 @@ public class Arvore {
         int index;
         String numero="";
         do {
-            if(i==0){
+            if((i==0 && expression.charAt(0) != '(')){
                 index =0;
                 while(isNumber(expression.charAt(i+index))){
                     numero = numero + expression.charAt(i+index);
@@ -68,7 +74,10 @@ public class Arvore {
                  }else{
                      i++;
                  }
-                 if(!tree.root.hasLeftChild()){
+                 if(!tree.hasRoot()){
+                     tree = new Arvore(nodeOperando);
+                 }
+                 else if(!tree.root.hasLeftChild()){
                      tree.root.setLeft(nodeOperando);
                  }
                  else if(!tree.root.hasRightChild()){
@@ -80,16 +89,38 @@ public class Arvore {
                  System.out.println(e.getMessage());
                  return new Arvore();
              }catch (NumberFormatException e){
-                 nodeOperador = new Operador(expression.charAt(i));
-                 nodeOperador.setLeft(tree.root);
-                 tree.setRoot(nodeOperador);
-                 i++;
+                 if(!tree.hasRoot() || expression.charAt(i) == ')'){
+                     i++;
+                 }
+                 else if(expression.charAt(i) == '('){
+                     int aux =i+1;
+                     String auxStr ="";
+                     Arvore auxTree = new Arvore();
+                     while(expression.charAt(aux)!= ')'){
+                         auxStr = auxStr + expression.charAt(aux);
+                         aux++;
+                     }
+                     auxTree = createTree(auxTree,auxStr);
+                     if(!tree.getRoot().hasLeftChild()){
+                         tree.getRoot().setLeft(auxTree.getRoot());
+                     }
+                     else if(!tree.getRoot().hasRightChild()){
+                         tree.getRoot().setRight(auxTree.getRoot());
+                     }
+                  i = aux;
+                 }else{
+                     nodeOperador = new Operador(expression.charAt(i));
+                     nodeOperador.setLeft(tree.root);
+                     tree.setRoot(nodeOperador);
+                     i++;
+                 }
+
              }
             }
 
         }while(i<expression.length());
         return tree;
-    };
+    }
 
     private static boolean isNumber(char number){
         try{
