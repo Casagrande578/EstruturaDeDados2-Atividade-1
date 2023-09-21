@@ -1,3 +1,10 @@
+// - Header -
+// Atividade 1 de Estrutura de Dados 2 -
+// Grupo:
+// Enzo Galeazzo Casagrande - 32209606
+// Rafael Marques Cruz Russo - 32220294
+// Marcos Carvalho Júnior - 32234120
+// - End Header-
 package Arvore;
 
 import Node.*;
@@ -16,9 +23,18 @@ public class Arvore {
         this.root = root;
     }
 
+    /**
+     *
+     * @return Retorna o nó raíz da Arvore
+     */
     public Node getRoot() {
         return root;
     }
+
+    /**
+     * O objetivo deste método é verificar se à Árvore foi iniciada corretamente
+     * @return Retorna true caso a Arvore tenha raíz
+     */
     public boolean hasRoot(){
         if(this.root != null){
             return true;
@@ -26,10 +42,19 @@ public class Arvore {
         return false;
     }
 
+    /**
+     *
+     * @param root Um nó do tipo Operador ou Operando
+     */
     public void setRoot(Node root) {
         this.root = root;
     }
 
+    /**
+     * O Objetivo desse método estático é verificar se a expressão inserida é valida para dar continuidade à criação da árvore
+     * @param expression String de expressão aritimética
+     * @return boolean
+     */
     public static boolean isValidExpression(String expression){
         String regex = "^[0-9*\\/+\\-\\(\\)]*$";
         Pattern pattern = Pattern.compile(regex);
@@ -38,9 +63,16 @@ public class Arvore {
         return matcher.matches();
     }
 
+    /**
+     * O objetivo desse método estático é criar uma árvore a partir de uma expressão aritimética inserida - assemelha-se a um construtor;
+     * @param tree Arvore que irá receber a construção;
+     * @param expression Expressão aritimética;
+     * @throws IllegalArgumentException em caso de expressão vazia
+     * @return Arvore de expressão aritimética | Em caso de falha retorna uma árvore vazia
+     */
     public static Arvore createTree( Arvore tree, String expression ){
         if(expression == null || expression == ""){
-            throw new IllegalArgumentException("Variavel expressão não iniciada");
+            throw new IllegalArgumentException("Variável expressão não iniciada");
         }
         Operando nodeOperando;
         Operador nodeOperador;
@@ -122,6 +154,11 @@ public class Arvore {
         return tree;
     }
 
+    /**
+     *
+     * @param number Verifica se o char é valido para ser parseado para float
+     * @return boolean
+     */
     private static boolean isNumber(char number){
         try{
             Float.parseFloat(String.valueOf(number));

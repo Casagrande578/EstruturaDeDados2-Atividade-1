@@ -1,3 +1,10 @@
+// - Header -
+// Atividade 1 de Estrutura de Dados 2 -
+// Grupo:
+// Enzo Galeazzo Casagrande - 32209606
+// Rafael Marques Cruz Russo - 32220294
+// Marcos Carvalho Júnior - 32234120
+// - End Header-
 import java.util.Scanner;
 
 import static Arvore.Arvore.*;
@@ -10,6 +17,7 @@ public class Main {
         Arvore tree = new Arvore();
 
         Scanner scanner = new Scanner(System.in);
+        //Loop principal onde ocorre as decisões do menu;
         while (true){
             System.out.println("\n\n\nÁrvore de operações aritiméticas: ");
             System.out.println("1. Inserir expressão aritimética");

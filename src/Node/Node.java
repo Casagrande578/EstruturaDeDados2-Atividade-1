@@ -1,5 +1,12 @@
+// - Header -
+// Atividade 1 de Estrutura de Dados 2 -
+// Grupo:
+// Enzo Galeazzo Casagrande - 32209606
+// Rafael Marques Cruz Russo - 32220294
+// Marcos Carvalho Júnior - 32234120
+// - End Header-
 package Node;
-
+//Classe abstrata com o objetivo de definir os métodos e construtores genéricos das classes Operador e Operando;
 public abstract class Node {
     private float data;
     protected Node parent;
@@ -45,12 +52,21 @@ public abstract class Node {
         this.right = right;
     }
 
+    /**
+     * Método que verifica se o nó possui nó filho a esquerda
+     * @return boolean
+     */
     public boolean hasLeftChild(){
         if(this.left != null){
             return true;
         }
         return false;
     }
+
+    /**
+     * Método que verifica se o nó possui nó filho a direita
+     * @return boolean
+     */
     public boolean hasRightChild(){
         if(this.right != null){
             return true;
@@ -58,6 +74,10 @@ public abstract class Node {
         return false;
     }
 
+    /**
+     * Método que retorna o valor da informação do nó
+     * @return Valor numérico contendo a informação do nó
+     */
     public float visitar(){
         return this.getData();
     }
