@@ -34,38 +34,57 @@ public class Main {
                 choice = -1;
             }
 
-            switch (choice){
-                case 1:
+            switch (choice) {
+                case 1 -> {
                     System.out.println("Insira expressão aritimética: ");
-                    expressao =  scanner.nextLine();
-                    if(!isValidExpression(expressao)){
+                    expressao = scanner.nextLine();
+                    if (!isValidExpression(expressao)) {
                         System.out.println("Expressão inválida tente novamente");
-                        expressao ="";
-                        break;
-                    };
-                    break;
-                case 2:
-                    System.out.println("Criando árvore binária de expressão aritimética...");
-                    try{
-                        tree = createTree(tree,expressao);
-                    }catch (IllegalArgumentException e){
-                        System.out.println(e.getMessage());
+                        expressao = "";
                         break;
                     }
-                    break;
-                case 3:
+                    ;
+                }
+                case 2 -> {
+                    System.out.println("Criando árvore binária de expressão aritimética...");
+                    try {
+                        tree = createTree(tree, expressao);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+                case 3 -> {
                     //Mostra arvore
-                    break;
-                case 4:
-                    System.out.println("Valor da expressão é: " + tree.getRoot().visitar());
-                    break;
-                case 5:
-                    System.exit(0);
-                    break;
-                case -1:
-                    break;
-                default:
-                    System.out.println("Por favor inserir uma opção válida entre as apresentadas");
+                    System.out.println("Selecione opção de exibição da árvore: ");
+                    System.out.println("1. In Order");
+                    System.out.println("2. Pre Order");
+                    System.out.println("3. Post Order");
+                    System.out.println("4. Level Order");
+                    try {
+                        choice = Integer.parseInt(scanner.nextLine());
+                    }catch (NumberFormatException e){
+                        System.out.println("Por favor Inserir um valor numérico valido");
+                    }
+                    switch (choice){
+                        case 1 ->{
+                            System.out.println(tree.inOrderTraversal());
+                        }
+                        case 2->{
+                            System.out.println( tree.preOrderTraversal());
+                        }
+                        case 3->{
+                            System.out.println(tree.postOrderTraversal());
+                        }
+                        case 4->{
+                            System.out.println(tree.levelOrderTraversal());
+                        }
+                        default -> System.out.println("Por favor inserir uma opção válida entre as apresentadas");
+                    }
+                } case 4 -> System.out.println("Valor da expressão é: " + tree.getRoot().visitar());
+                case 5 -> System.exit(0);
+                case -1 -> {
+                }
+                default -> System.out.println("Por favor inserir uma opção válida entre as apresentadas");
             }
         }
     }

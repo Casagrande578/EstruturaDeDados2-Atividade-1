@@ -10,6 +10,8 @@ package Arvore;
 import Node.*;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -165,6 +167,85 @@ public class Arvore {
             return true;
         }catch (NumberFormatException e){
             return false;
+        }
+    }
+
+    public String inOrderTraversal(){
+        return inOrderTraversalHelper(root);
+    }
+
+    private String inOrderTraversalHelper(Node node){
+        try{
+            StringBuilder sb = new StringBuilder();
+
+            sb.append(inOrderTraversalHelper(node.getLeft()));
+            sb.append(node.visitar() + " ");
+            sb.append(inOrderTraversalHelper(node.getRight()));
+
+            return sb.toString();
+        }catch(NullPointerException e){
+            return "";
+        }
+    }
+
+    public String preOrderTraversal(){
+        return preOrderTraversalHelper(root);
+    }
+
+    private String preOrderTraversalHelper(Node node){
+        try{
+            StringBuilder sb = new StringBuilder();
+
+            sb.append(node.visitar() + " ");
+            sb.append(preOrderTraversalHelper(node.getLeft()));
+            sb.append(preOrderTraversalHelper(node.getRight()));
+
+            return sb.toString();
+        }catch (NullPointerException e){
+            return "";
+        }
+    }
+
+    public String postOrderTraversal(){
+        return postOrderTraversalHelper(root);
+    }
+
+    private String postOrderTraversalHelper(Node node) {
+        try{
+            StringBuilder sb = new StringBuilder();
+            sb.append(postOrderTraversalHelper(node.getLeft()));
+            sb.append(postOrderTraversalHelper(node.getRight()));
+            sb.append(node.visitar() + " ");
+
+            return sb.toString();
+        }catch (NullPointerException e){
+            return "";
+        }
+    }
+
+    public String levelOrderTraversal(){
+        return levelOrderTraversalHelper(root);
+    }
+
+    private String levelOrderTraversalHelper(Node node){
+        try{
+            StringBuilder sb = new StringBuilder();
+
+            Queue<Node> queue = new LinkedList<>();
+            queue.add(node);
+            while(!queue.isEmpty()){
+                Node visited = queue.remove();
+                sb.append(visited.visitar() + " ");
+                if(visited.hasLeftChild()){
+                    queue.add(visited.getLeft());
+                }
+                if(visited.hasRightChild()){
+                    queue.add(visited.getRight());
+                }
+            }
+            return sb.toString();
+        }catch (NullPointerException e){
+            return "";
         }
     }
 }
