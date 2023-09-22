@@ -18,9 +18,7 @@ import java.util.regex.Pattern;
 public class Arvore {
     private Node root;
 
-    public Arvore(){
-        this(null);
-    }
+    public Arvore(){}
     public Arvore (Node root){
         this.root = root;
     }
@@ -67,12 +65,14 @@ public class Arvore {
 
     /**
      * O objetivo desse método estático é criar uma árvore a partir de uma expressão aritimética inserida - assemelha-se a um construtor;
-     * @param tree Arvore que irá receber a construção;
      * @param expression Expressão aritimética;
      * @throws IllegalArgumentException em caso de expressão vazia
      * @return Arvore de expressão aritimética | Em caso de falha retorna uma árvore vazia
      */
-    public static Arvore createTree( Arvore tree, String expression ){
+    public Arvore(String expression){
+        this.createTree(expression);
+    }
+    private void createTree( String expression ){
         if(expression == null || expression == ""){
             throw new IllegalArgumentException("Variável expressão não iniciada");
         }
@@ -89,7 +89,7 @@ public class Arvore {
                     index++;
                 }
                 i+=index;
-                tree = new Arvore(new Operando(Float.parseFloat(numero)));
+                this.root = new Operando(Float.parseFloat(numero));
             }
             else{
              try{
@@ -108,44 +108,43 @@ public class Arvore {
                  }else{
                      i++;
                  }
-                 if(!tree.hasRoot()){
-                     tree = new Arvore(nodeOperando);
+                 if(!this.hasRoot()){
+                     this.root = nodeOperando;
                  }
-                 else if(!tree.root.hasLeftChild()){
-                     tree.root.setLeft(nodeOperando);
+                 else if(!this.root.hasLeftChild()){
+                     this.root.setLeft(nodeOperando);
                  }
-                 else if(!tree.root.hasRightChild()){
-                     tree.root.setRight(nodeOperando);
+                 else if(!this.root.hasRightChild()){
+                     this.root.setRight(nodeOperando);
                  }else{
                      throw new IOException("Erro ao criar Arvore");
                  }
              }catch (IOException e){
                  System.out.println(e.getMessage());
-                 return new Arvore();
              }catch (NumberFormatException e){
-                 if(!tree.hasRoot() || expression.charAt(i) == ')'){
+                 if(!this.hasRoot() || expression.charAt(i) == ')'){
                      i++;
                  }
                  else if(expression.charAt(i) == '('){
                      int aux =i+1;
                      String auxStr ="";
-                     Arvore auxTree = new Arvore();
+                     Arvore auxTree;
                      while(expression.charAt(aux)!= ')'){
                          auxStr = auxStr + expression.charAt(aux);
                          aux++;
                      }
-                     auxTree = createTree(auxTree,auxStr);
-                     if(!tree.getRoot().hasLeftChild()){
-                         tree.getRoot().setLeft(auxTree.getRoot());
+                     auxTree = new Arvore(auxStr);
+                     if(!this.getRoot().hasLeftChild()){
+                         this.getRoot().setLeft(auxTree.getRoot());
                      }
-                     else if(!tree.getRoot().hasRightChild()){
-                         tree.getRoot().setRight(auxTree.getRoot());
+                     else if(!this.getRoot().hasRightChild()){
+                         this.getRoot().setRight(auxTree.getRoot());
                      }
                   i = aux;
                  }else{
                      nodeOperador = new Operador(expression.charAt(i));
-                     nodeOperador.setLeft(tree.root);
-                     tree.setRoot(nodeOperador);
+                     nodeOperador.setLeft(this.root);
+                     this.setRoot(nodeOperador);
                      i++;
                  }
 
@@ -153,7 +152,6 @@ public class Arvore {
             }
 
         }while(i<expression.length());
-        return tree;
     }
 
     /**
