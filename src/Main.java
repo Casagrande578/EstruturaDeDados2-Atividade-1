@@ -48,7 +48,7 @@ public class Main {
                 case 2 -> {
                     System.out.println("Criando árvore binária de expressão aritimética...");
                     try {
-                        tree = createTree(tree, expressao);
+                        tree = new Arvore(expressao);
                     } catch (IllegalArgumentException e) {
                         System.out.println(e.getMessage());
                     }
