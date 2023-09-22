@@ -7,6 +7,11 @@
 // - End Header-
 package Node;
 //Classe abstrata com o objetivo de definir os métodos e construtores genéricos das classes Operador e Operando;
+/**
+ * @author Enzo Galeazzo Casagrande - 32209606
+ * @author Rafael Marques Cruz Russo - 32220294
+ * @author Marcos Carvalho Junior - 32234120
+ */
 public abstract class Node {
     private float data;
     protected Node parent;

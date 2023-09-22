@@ -7,6 +7,11 @@
 // - End Header-
 package Node;
 //Classe que tem o objetivo de armazenar o valor numérico do nó Operando
+/**
+ * @author Enzo Galeazzo Casagrande - 32209606
+ * @author Rafael Marques Cruz Russo - 32220294
+ * @author Marcos Carvalho Junior - 32234120
+ */
 public class Operando extends Node{
     public Operando(float operando){
         super(operando);

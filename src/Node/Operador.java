@@ -7,6 +7,11 @@
 // - End Header-
 package Node;
 //Classe operador com o objetivo de conter as informações e métodos de um operador aritimético
+/**
+ * @author Enzo Galeazzo Casagrande - 32209606
+ * @author Rafael Marques Cruz Russo - 32220294
+ * @author Marcos Carvalho Junior - 32234120
+ */
 public class Operador extends Node{
     private char operador;
 

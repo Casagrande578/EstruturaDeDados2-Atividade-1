@@ -15,6 +15,11 @@ import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @author Enzo Galeazzo Casagrande - 32209606
+ * @author Rafael Marques Cruz Russo - 32220294
+ * @author Marcos Carvalho Junior - 32234120
+ */
 public class Arvore {
     private Node root;
 
