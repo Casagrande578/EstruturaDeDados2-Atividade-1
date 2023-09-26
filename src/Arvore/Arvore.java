@@ -61,7 +61,7 @@ public class Arvore {
      * @return boolean
      */
     public static boolean isValidExpression(String expression){
-        String regex = "^[0-9*\\/+\\-\\(\\)]*$";
+        String regex = "^[0-9*\\/+\\-\\(\\)\\.]*$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(expression);
 
@@ -134,10 +134,8 @@ public class Arvore {
                      int aux =i+1;
                      String auxStr ="";
                      Arvore auxTree;
-                     while(expression.charAt(aux)!= ')'){
-                         auxStr = auxStr + expression.charAt(aux);
-                         aux++;
-                     }
+                     auxStr = createAuxExpression(expression, aux);
+                     aux += auxStr.length();
                      auxTree = new Arvore(auxStr);
                      if(!this.getRoot().hasLeftChild()){
                          this.getRoot().setLeft(auxTree.getRoot());
@@ -146,17 +144,41 @@ public class Arvore {
                          this.getRoot().setRight(auxTree.getRoot());
                      }
                   i = aux;
-                 }else{
+                 }
+                 else{
                      nodeOperador = new Operador(expression.charAt(i));
-                     nodeOperador.setLeft(this.root);
-                     this.setRoot(nodeOperador);
-                     i++;
+                     if((nodeOperador.getOperador() == '*' || nodeOperador.getOperador() == '/') && expression.charAt(i-1) != ')'  && this.root.hasRightChild() ){
+                         index = 1;
+                         numero="";
+                         for(int j =index; j<expression.length(); j++){
+                             if(isNumber(expression.charAt(i+index))){
+                                 numero = numero + expression.charAt(i+j);
+                                 index++;
+                             }
+                             if (index + i >= expression.length()) break;
+                         }
+                         nodeOperando =  new Operando(Float.parseFloat(numero));
+                         i+=index;
+                         Arvore auxTree = new Arvore(root.getRight(),nodeOperador,nodeOperando);
+                         this.root.setRight(auxTree.getRoot());
+                     }
+                     else {
+                         nodeOperador.setLeft(this.root);
+                         this.setRoot(nodeOperador);
+                         i++;
+                     }
                  }
 
              }
             }
 
         }while(i<expression.length());
+    }
+
+    public Arvore (Node nodeLeft, Node nodeRoot, Node nodeRight ){
+        this.root = nodeRoot;
+        this.root.setLeft(nodeLeft);
+        this.root.setRight(nodeRight);
     }
 
     /**
@@ -166,11 +188,29 @@ public class Arvore {
      */
     private static boolean isNumber(char number){
         try{
+            if(number == '.') return true;
             Float.parseFloat(String.valueOf(number));
             return true;
         }catch (NumberFormatException e){
             return false;
         }
+    }
+
+    private String createAuxExpression(String auxExpression,int aux){
+        String auxStr="";
+        String tempString = "";
+        while(auxExpression.charAt(aux)!= ')'){
+            if(auxExpression.charAt(aux) == '('){
+                auxStr += auxExpression.charAt(aux);
+                aux++;
+                tempString = createAuxExpression(auxExpression, aux);
+                auxStr = auxStr + tempString;
+                aux += tempString.length();
+            }
+            auxStr = auxStr + auxExpression.charAt(aux);
+            aux++;
+        }
+        return auxStr;
     }
 
     public String inOrderTraversal(){
