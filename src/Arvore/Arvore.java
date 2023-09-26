@@ -146,17 +146,41 @@ public class Arvore {
                          this.getRoot().setRight(auxTree.getRoot());
                      }
                   i = aux;
-                 }else{
+                 }
+                 else{
                      nodeOperador = new Operador(expression.charAt(i));
-                     nodeOperador.setLeft(this.root);
-                     this.setRoot(nodeOperador);
-                     i++;
+                     if((nodeOperador.getOperador() == '*' || nodeOperador.getOperador() == '/') && expression.charAt(i-1) != ')' && this.hasRoot() ){
+                         index = 1;
+                         numero="";
+                         for(int j =index; j<expression.length(); j++){
+                             if(isNumber(expression.charAt(i+index))){
+                                 numero = numero + expression.charAt(i+j);
+                                 index++;
+                             }
+                             if (index + i >= expression.length()) break;
+                         }
+                         nodeOperando =  new Operando(Float.parseFloat(numero));
+                         i+=index;
+                         Arvore auxTree = new Arvore(root.getRight(),nodeOperador,nodeOperando);
+                         this.root.setRight(auxTree.getRoot());
+                     }
+                     else {
+                         nodeOperador.setLeft(this.root);
+                         this.setRoot(nodeOperador);
+                         i++;
+                     }
                  }
 
              }
             }
 
         }while(i<expression.length());
+    }
+
+    public Arvore (Node nodeLeft, Node nodeRoot, Node nodeRight ){
+        this.root = nodeRoot;
+        this.root.setLeft(nodeLeft);
+        this.root.setRight(nodeRight);
     }
 
     /**
