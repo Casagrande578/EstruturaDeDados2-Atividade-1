@@ -38,6 +38,7 @@ public class Main {
                 case 1 -> {
                     System.out.println("Insira expressão aritimética: ");
                     expressao = scanner.nextLine();
+                    expressao = expressao.replaceAll("\\s","");
                     if (!isValidExpression(expressao)) {
                         System.out.println("Expressão inválida tente novamente");
                         expressao = "";

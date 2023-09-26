@@ -61,7 +61,7 @@ public class Arvore {
      * @return boolean
      */
     public static boolean isValidExpression(String expression){
-        String regex = "^[0-9*\\/+\\-\\(\\)]*$";
+        String regex = "^[0-9*\\/+\\-\\(\\)\\.]*$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(expression);
 
@@ -149,7 +149,7 @@ public class Arvore {
                  }
                  else{
                      nodeOperador = new Operador(expression.charAt(i));
-                     if((nodeOperador.getOperador() == '*' || nodeOperador.getOperador() == '/') && expression.charAt(i-1) != ')' && this.hasRoot() ){
+                     if((nodeOperador.getOperador() == '*' || nodeOperador.getOperador() == '/') && expression.charAt(i-1) != ')' && this.root.hasLeftChild() && this.root.hasRightChild() ){
                          index = 1;
                          numero="";
                          for(int j =index; j<expression.length(); j++){
@@ -190,11 +190,27 @@ public class Arvore {
      */
     private static boolean isNumber(char number){
         try{
+            if(number == '.') return true;
             Float.parseFloat(String.valueOf(number));
             return true;
         }catch (NumberFormatException e){
             return false;
         }
+    }
+
+    private String createAuxExpression(String auxExpression,int aux){
+        String auxStr="";
+        String tempString = "";
+        while(auxExpression.charAt(aux)!= ')'){
+            if(auxExpression.charAt(aux) == '('){
+                tempString = createAuxExpression(auxExpression, aux);
+                auxStr = auxStr + tempString;
+                aux += tempString.length();
+            }
+            auxStr = auxStr + auxExpression.charAt(aux);
+            aux++;
+        }
+        return auxStr;
     }
 
     public String inOrderTraversal(){
