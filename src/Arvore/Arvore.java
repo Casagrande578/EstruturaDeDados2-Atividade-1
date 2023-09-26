@@ -134,10 +134,8 @@ public class Arvore {
                      int aux =i+1;
                      String auxStr ="";
                      Arvore auxTree;
-                     while(expression.charAt(aux)!= ')'){
-                         auxStr = auxStr + expression.charAt(aux);
-                         aux++;
-                     }
+                     auxStr = createAuxExpression(expression, aux);
+                     aux += auxStr.length();
                      auxTree = new Arvore(auxStr);
                      if(!this.getRoot().hasLeftChild()){
                          this.getRoot().setLeft(auxTree.getRoot());
@@ -149,7 +147,7 @@ public class Arvore {
                  }
                  else{
                      nodeOperador = new Operador(expression.charAt(i));
-                     if((nodeOperador.getOperador() == '*' || nodeOperador.getOperador() == '/') && expression.charAt(i-1) != ')' && this.root.hasLeftChild() && this.root.hasRightChild() ){
+                     if((nodeOperador.getOperador() == '*' || nodeOperador.getOperador() == '/') && expression.charAt(i-1) != ')'  && this.root.hasRightChild() ){
                          index = 1;
                          numero="";
                          for(int j =index; j<expression.length(); j++){
@@ -203,6 +201,8 @@ public class Arvore {
         String tempString = "";
         while(auxExpression.charAt(aux)!= ')'){
             if(auxExpression.charAt(aux) == '('){
+                auxStr += auxExpression.charAt(aux);
+                aux++;
                 tempString = createAuxExpression(auxExpression, aux);
                 auxStr = auxStr + tempString;
                 aux += tempString.length();
