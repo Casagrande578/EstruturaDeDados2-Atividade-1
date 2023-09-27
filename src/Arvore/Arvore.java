@@ -147,7 +147,8 @@ public class Arvore {
                  }
                  else{
                      nodeOperador = new Operador(expression.charAt(i));
-                     if((nodeOperador.getOperador() == '*' || nodeOperador.getOperador() == '/') && expression.charAt(i-1) != ')'  && this.root.hasRightChild() ){
+                     System.out.println(expression.charAt(i-1));
+                     if((nodeOperador.getOperador() == '*' || nodeOperador.getOperador() == '/') && this.root.hasRightChild() && (expression.charAt(i-1) != ')' || expression.charAt(i-2) == ')' )){
                          index = 1;
                          numero="";
                          for(int j =index; j<expression.length(); j++){
