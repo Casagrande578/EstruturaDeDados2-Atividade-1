@@ -1,0 +1,1 @@
+java -jar .\out\artifacts\Atividade1_jar\Atividade1.jar
